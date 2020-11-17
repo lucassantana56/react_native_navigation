@@ -66,10 +66,10 @@ export default StyleSheet.create({
         marginTop: 40,
     },
     restaurant: {
-        padding: 24,
+        padding: 12,
         borderRadius:8,
         backgroundColor:'#fff',
-        marginBottom: 16,
+        marginBottom: 7,
     },
     restaurantProperty:{
         fontSize:14,

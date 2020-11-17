@@ -32,7 +32,7 @@ export default function InternalRouter() {
                     <MaterialCommunityIcons name="shopping" color={"green"} size={size}/>
                 ),
             }}/>
-            <BottomNavigation.Screen name="Shop" component={Map}
+            <BottomNavigation.Screen name="Map" component={Map}
                                      options={{
                                          tabBarLabel: 'Map',
                                          tabBarIcon: ({color, size}) => (
