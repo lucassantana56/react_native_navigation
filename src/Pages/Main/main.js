@@ -21,6 +21,7 @@ import api from "../../services/api";
 import style from "../style";
 import {useNavigation} from "@react-navigation/native";
 
+import defaultImage from "../../../assets/placeholder.jpg";
 
 export default function App() {
     const [restaurant, setRestaurant] = useState([]);
@@ -28,7 +29,7 @@ export default function App() {
     const navigation = useNavigation();
 
     function navigateToMap(restaurant) {
-        navigation.navigate('Map', restaurant);
+        navigation.navigate('Map', {res: restaurant, userLocation: location});
     }
 
     async function requestDelivery(restaurant) {
@@ -53,7 +54,7 @@ export default function App() {
                 + '"}}');
         console.log(body);
         global.socket.emit("request", body);
-        navigateToMap();
+        navigateToMap(restaurant);
     }
 
     //Generates a request id
@@ -88,11 +89,6 @@ export default function App() {
         })();
     }, []);
 
-    /**    const image = { uri: json.restaurant.featured_image };
-     const restaurantLocation = {latitude:json.restaurant.location.latitude,longitude: json.restaurant.location.longitude}
-     const rest = {name: json.restaurant.name,image:json.restaurant.featured_image}
-     array.push(this.renderRestaurant(image, json.restaurant.name,restaurantLocation,this.state.location));**/
-
     return (
         <SafeAreaView style={style.container}>
             <View style={style.defaultView}>
@@ -100,29 +96,6 @@ export default function App() {
                     style={style.inputText}
                 />
             </View>
-
-            <ScrollView
-                horizontal={true}>
-                <TouchableOpacity>
-                    <FontAwesome5 name="hamburger" size={80} color="red"/>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <FontAwesome5 name="pizza-slice" size={80} color="orange"/>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Entypo name="drink" size={80} color="green"/>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <FontAwesome5 name="fish" size={80} color="violet"/>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <FontAwesome5 name="cookie" size={80} color="brown"/>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <FontAwesome5 name="carrot" size={80} color="blue"/>
-                </TouchableOpacity>
-            </ScrollView>
-
             <FlatList
                 style={style.restaurantList}
                 data={restaurant}
@@ -132,7 +105,7 @@ export default function App() {
                         <TouchableOpacity
                             onPress={() => requestDelivery(restaurant.restaurant)}>
                             <ImageBackground imageStyle={{borderRadius: 10}}
-                                             source={{uri: restaurant.restaurant.featured_image}}
+                                             source={restaurant.restaurant.featured_image === "" ? defaultImage : {uri: restaurant.restaurant.featured_image}}
                                              style={{
                                                  flex: 1,
                                                  height: 200,
@@ -149,7 +122,6 @@ export default function App() {
                     </View>
                 )}
             />
-
         </SafeAreaView>
     );
 }

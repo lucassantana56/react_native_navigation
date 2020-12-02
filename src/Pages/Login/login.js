@@ -12,7 +12,7 @@ export default function App() {
     const [password, setPassword] = useState();
     const navigation = useNavigation();
     const router = useRoute();
-    const ENDPOINT = 'http://10.99.1.207:3000';
+    const ENDPOINT = 'http://10.99.2.152:3000';
 
     useEffect(() => {
         connectSocketIo();
